@@ -10,7 +10,10 @@
     "format": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {
+    "@aws-amplify/ui-components": "^0.6.0",
+    "@aws-amplify/ui-react": "^0.2.13",
     "@reduxjs/toolkit": "^1.4.0",
+    "aws-amplify": "^3.0.22",
     "next": "^9.4.4",
     "nookies": "^2.3.2",
     "react": "^16.13.1",
