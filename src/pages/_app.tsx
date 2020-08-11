@@ -14,7 +14,7 @@ Amplify.configure({
   },
 });
 
-const kimonoApp = ({ Component, pageProps }: AppProps): ReactElement => {
+const CustomApp = ({ Component, pageProps }: AppProps): ReactElement => {
   return (
     <Provider store={createStore()}>
       <Component {...pageProps} />
@@ -22,4 +22,4 @@ const kimonoApp = ({ Component, pageProps }: AppProps): ReactElement => {
   );
 };
 
-export default kimonoApp;
+export default CustomApp;
