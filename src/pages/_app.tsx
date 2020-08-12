@@ -12,6 +12,13 @@ Amplify.configure({
     mandatorySignIn: false,
     authenticationFlowType: 'USER_PASSWORD_AUTH',
   },
+  oauth: {
+    domain: process.env.NEXT_PUBLIC_COGNITO_DOMAIN,
+    scope: ['profile', 'email', 'openid'],
+    redirectSignIn: `${process.env.NEXT_PUBLIC_APP_URL}/cognito/authorized`,
+    redirectSignOut: `${process.env.NEXT_PUBLIC_APP_URL}/cognito/logout`,
+    responseType: 'code',
+  },
 });
 
 const CustomApp = ({ Component, pageProps }: AppProps): ReactElement => {
