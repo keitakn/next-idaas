@@ -3,7 +3,9 @@ import React from 'react';
 
 export const SignInPage: React.FC = (): JSX.Element => {
   const handleLineLoginClick = async () => {
-    await Auth.federatedSignIn({ customProvider: 'LINE' });
+    await Auth.federatedSignIn({
+      customProvider: `${process.env.NEXT_PUBLIC_DEPLOY_STAGE}-LINE`,
+    });
   };
 
   return (
