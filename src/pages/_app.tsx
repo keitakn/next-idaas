@@ -11,6 +11,12 @@ Amplify.configure({
     userPoolWebClientId: process.env.NEXT_PUBLIC_SPA_CLIENT_ID,
     mandatorySignIn: false,
     authenticationFlowType: 'USER_PASSWORD_AUTH',
+    cookieStorage: {
+      domain: process.env.NEXT_PUBLIC_AUTH_COOKIE_DOMAIN,
+      path: '/',
+      expires: 7,
+      secure: false,
+    },
   },
   oauth: {
     domain: process.env.NEXT_PUBLIC_COGNITO_DOMAIN,
