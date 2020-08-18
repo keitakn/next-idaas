@@ -1,15 +1,13 @@
-import React from 'react';
-import { GetServerSideProps } from 'next';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export const CallbackPage: React.FC = (): JSX.Element => {
-  return <div>Cognito Callback URL</div>;
-};
+  const router = useRouter();
+  useEffect(() => {
+    router.replace('/cognito/authorized');
+  });
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  context.res.writeHead(302, { Location: '/cognito/authorized' });
-  context.res.end();
-
-  return { props: {} };
+  return <div>認証後のページにリダイレクトします。少々お待ち下さい。</div>;
 };
 
 export default CallbackPage;
