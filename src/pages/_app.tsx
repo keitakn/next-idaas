@@ -21,7 +21,7 @@ Amplify.configure({
   oauth: {
     domain: process.env.NEXT_PUBLIC_COGNITO_DOMAIN,
     scope: ['profile', 'email', 'openid'],
-    redirectSignIn: `${process.env.NEXT_PUBLIC_APP_URL}/cognito/authorized`,
+    redirectSignIn: `${process.env.NEXT_PUBLIC_APP_URL}/cognito/callback`,
     redirectSignOut: `${process.env.NEXT_PUBLIC_APP_URL}/cognito/logout`,
     responseType: 'code',
   },
