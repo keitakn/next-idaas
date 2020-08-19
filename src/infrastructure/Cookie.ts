@@ -3,9 +3,11 @@ import {
   setCookie as nookiesSetCookie,
   destroyCookie as nookiesDestroyCookie,
 } from 'nookies';
-import { NextPageContext } from 'next';
+import { NextPageContext, GetServerSidePropsContext } from 'next';
 
-export const findCookies = <T>(ctx?: NextPageContext): T => {
+export const findCookies = <T>(
+  ctx?: NextPageContext | GetServerSidePropsContext,
+): T => {
   const cookies: any = parseCookies(ctx);
 
   return cookies as T;
