@@ -6,7 +6,7 @@ import createStore from '../ducks/createStore';
 
 Amplify.configure({
   Auth: {
-    region: 'ap-northeast-1',
+    region: process.env.NEXT_PUBLIC_COGNITO_REGION,
     userPoolId: process.env.NEXT_PUBLIC_USER_POOL_ID,
     userPoolWebClientId: process.env.NEXT_PUBLIC_SPA_CLIENT_ID,
     mandatorySignIn: false,
