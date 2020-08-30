@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const userName = cookies[userNameKey];
 
-  const idTokenKey = `${keyPrefix}.${userName}.idToken`;
+  const idTokenKey = `${keyPrefix}.${encodeURIComponent(userName)}.idToken`;
 
   const idToken = cookies[idTokenKey];
 
