@@ -31,7 +31,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const userName = cookies[userNameKey];
 
-  const idTokenKey = `${keyPrefix}.${encodeURIComponent(userName)}.idToken`;
+  // 単純なURLエンコードだとメールアドレス内の+も変換されてしまうので以下のように @ のみを置き換えるようにする
+  const idTokenKey = `${keyPrefix}.${userName.replace('@', '%40')}.idToken`;
 
   const idToken = cookies[idTokenKey];
 
