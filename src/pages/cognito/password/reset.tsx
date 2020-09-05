@@ -1,7 +1,7 @@
 import { Auth } from 'aws-amplify';
 import React from 'react';
 
-export const PasswordResetPage: React.FC = (): JSX.Element => {
+export const ResetPage: React.FC = (): JSX.Element => {
   const [email, setEmail] = React.useState<string>('');
   const [errorMessage, setErrorMessage] = React.useState<string>();
   const [sendVerificationCode, setSendVerificationCode] = React.useState<
@@ -65,4 +65,4 @@ export const PasswordResetPage: React.FC = (): JSX.Element => {
   );
 };
 
-export default PasswordResetPage;
+export default ResetPage;
