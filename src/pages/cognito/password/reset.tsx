@@ -1,12 +1,69 @@
 import { Auth } from 'aws-amplify';
-import React from 'react';
+import React, { useReducer } from 'react';
+import { createAction } from '@reduxjs/toolkit';
 
-export const ResetPage: React.FC = (): JSX.Element => {
+type State = {
+  email: string;
+  errorMessage: string;
+  sendVerificationCode: boolean;
+};
+
+const defaultState = {
+  email: '',
+  errorMessage: '',
+  sendVerificationCode: false,
+};
+
+const actions = {
+  postPasswordResetStart: createAction(
+    'Cognito/postPasswordResetStart',
+    (email: string) => ({
+      payload: { email },
+    }),
+  ),
+  postPasswordResetSuccess: createAction(
+    'Cognito/postPasswordResetSuccess',
+    (email: string) => ({
+      payload: { email },
+    }),
+  ),
+  postPasswordResetError: createAction(
+    'Cognito/postPasswordResetError',
+    (err: { message: string }, email: string) => ({
+      payload: { email, err },
+    }),
+  ),
+};
+
+const reducer = (
+  state: State,
+  action:
+    | ReturnType<typeof actions.postPasswordResetStart>
+    | ReturnType<typeof actions.postPasswordResetError>,
+) => {
+  switch (action.type) {
+    case 'Cognito/postPasswordResetStart':
+      return { ...state, email: action.payload.email };
+    case 'Cognito/postPasswordResetSuccess':
+      return {
+        ...state,
+        email: action.payload.email,
+        sendVerificationCode: true,
+      };
+    case 'Cognito/postPasswordResetError':
+      return {
+        ...state,
+        email: action.payload.email,
+        errorMessage: action.payload.err.message,
+      };
+    default:
+      return state;
+  }
+};
+
+const PasswordResetForm = () => {
   const [email, setEmail] = React.useState<string>('');
-  const [errorMessage, setErrorMessage] = React.useState<string>();
-  const [sendVerificationCode, setSendVerificationCode] = React.useState<
-    boolean
-  >(false);
+  const [state, dispatch] = useReducer(reducer, defaultState);
 
   const changedEmailHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
     setEmail(event.target.value.trim());
@@ -16,16 +73,23 @@ export const ResetPage: React.FC = (): JSX.Element => {
       return;
     }
 
-    setSendVerificationCode(false);
+    dispatch({
+      type: 'Cognito/postPasswordResetStart',
+      payload: { email },
+    });
 
     try {
       await Auth.forgotPassword(email);
 
-      setErrorMessage('');
-
-      setSendVerificationCode(true);
+      dispatch({
+        type: 'Cognito/postPasswordResetSuccess',
+        payload: { email },
+      });
     } catch (e) {
-      setErrorMessage(e.message);
+      dispatch({
+        type: 'Cognito/postPasswordResetError',
+        payload: { err: e, email },
+      });
     }
   };
 
@@ -52,15 +116,27 @@ export const ResetPage: React.FC = (): JSX.Element => {
           パスワードリセット用のメールを送信する
         </button>
       </form>
-      {sendVerificationCode ? (
+      {state.sendVerificationCode ? (
         <div>
-          {email}{' '}
+          {state.email}{' '}
           にパスワードリセット用の認証メールを送信しました。メールをご確認下さい。
         </div>
       ) : (
         ''
       )}
-      {errorMessage ? <div style={errorStyle}>{errorMessage}</div> : ''}
+      {state.errorMessage ? (
+        <div style={errorStyle}>{state.errorMessage}</div>
+      ) : (
+        ''
+      )}
+    </>
+  );
+};
+
+export const ResetPage: React.FC = (): JSX.Element => {
+  return (
+    <>
+      <PasswordResetForm />
     </>
   );
 };
