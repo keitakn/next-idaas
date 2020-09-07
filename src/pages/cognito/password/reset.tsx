@@ -39,6 +39,7 @@ const reducer = (
   state: State,
   action:
     | ReturnType<typeof actions.postPasswordResetStart>
+    | ReturnType<typeof actions.postPasswordResetSuccess>
     | ReturnType<typeof actions.postPasswordResetError>,
 ) => {
   switch (action.type) {
