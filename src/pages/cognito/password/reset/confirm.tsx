@@ -61,6 +61,13 @@ const ConfirmPage: React.FC<Props> = ({ user, code, error }: Props) => {
       </form>
       {error ? <div style={errorStyle}>{error.message}</div> : ''}
       {errorMessage ? <div style={errorStyle}>{errorMessage}</div> : ''}
+      {error || errorMessage ? (
+        <Link href="/cognito/password/reset">
+          パスワードリセットを最初からやり直す
+        </Link>
+      ) : (
+        ''
+      )}
       {passwordResetCompleted ? (
         <div>
           新しいパスワードに変更しました。{' '}

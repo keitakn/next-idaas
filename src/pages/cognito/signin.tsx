@@ -2,6 +2,7 @@ import { Auth } from 'aws-amplify';
 import React from 'react';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export const SignInPage: React.FC = (): JSX.Element => {
   const [email, setEmail] = React.useState<string>('');
@@ -115,6 +116,7 @@ export const SignInPage: React.FC = (): JSX.Element => {
       <button type="button" onClick={handleFacebookLoginClick}>
         Facebookでログイン
       </button>
+      <Link href="/cognito/password/reset">パスワードを忘れた方はこちら</Link>
     </>
   );
 };
