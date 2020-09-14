@@ -20,7 +20,7 @@ const PasswordResetForm = () => {
     setSendVerificationCode(false);
 
     try {
-      await Auth.forgotPassword(email);
+      await Auth.forgotPassword(email, { email });
 
       setSendVerificationCode(true);
       setSentEmail(email);
