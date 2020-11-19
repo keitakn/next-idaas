@@ -48,6 +48,7 @@ type CognitoIdToken = {
   auth_time: number;
   exp: number;
   iat: number;
+  name?: string;
 };
 
 export const cognitoRegion = (): string => {
@@ -167,4 +168,14 @@ export const extractFacebookSubFromCognitoIdToken = (
   }
 
   return cognitoIdToken.identities[0].userId;
+};
+
+export const extractNameFromCognitoIdToken = (
+  cognitoIdToken: CognitoIdToken,
+): string => {
+  if (!cognitoIdToken.name) {
+    return '';
+  }
+
+  return cognitoIdToken.name;
 };
