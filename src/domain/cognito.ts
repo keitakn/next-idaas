@@ -34,7 +34,14 @@ type CognitoIdToken = {
   email_verified: false;
   iss: string;
   aud: string;
-  identities: { [key: string]: string | number }[];
+  identities: {
+    userId: string;
+    providerName: string;
+    providerType: string;
+    issuer: string | null;
+    primary: string;
+    dateCreated: string;
+  }[];
   // eslint-disable-next-line camelcase
   token_use: 'id';
   // eslint-disable-next-line camelcase
@@ -139,4 +146,25 @@ export const verifyIdToken = async (
   }
 
   return cognitoIdToken;
+};
+
+export const extractFacebookSubFromCognitoIdToken = (
+  cognitoIdToken: CognitoIdToken,
+): string => {
+  if (!cognitoIdToken.identities) {
+    return '';
+  }
+
+  if (
+    !cognitoIdToken.identities[0].providerName ||
+    !cognitoIdToken.identities[0].userId
+  ) {
+    return '';
+  }
+
+  if (cognitoIdToken.identities[0].providerName !== 'Facebook') {
+    return '';
+  }
+
+  return cognitoIdToken.identities[0].userId;
 };

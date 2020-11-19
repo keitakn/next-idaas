@@ -1,10 +1,16 @@
 import React from 'react';
 import { GetServerSideProps } from 'next';
 import { findCookies } from '../../infrastructure/Cookie';
-import { verifyIdToken } from '../../domain/cognito';
+import {
+  verifyIdToken,
+  extractFacebookSubFromCognitoIdToken,
+} from '../../domain/cognito';
 
 type Props = {
-  user?: { sub: string };
+  user: {
+    sub: string;
+    profileImageUrl: string;
+  };
 };
 
 export const AuthorizedPage: React.FC<Props> = ({
@@ -14,7 +20,10 @@ export const AuthorizedPage: React.FC<Props> = ({
     <>
       {user ? (
         <div>
-          Cognitoで認証済のユーザーです。 ユーザーIDは {user.sub} です！
+          <p>Cognitoで認証済のユーザーです。 ユーザーIDは {user.sub} です！</p>
+          <p>
+            <img src={user.profileImageUrl} alt="ユーザープロフィール画像" />
+          </p>
         </div>
       ) : (
         ''
@@ -38,7 +47,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const cognitoIdToken = await verifyIdToken(idToken);
 
-  return { props: { user: { sub: cognitoIdToken.sub } } };
+  const facebookSub = extractFacebookSubFromCognitoIdToken(cognitoIdToken);
+
+  const profileImageUrl = `https://graph.facebook.com/${facebookSub}/picture?type=large`;
+
+  return { props: { user: { sub: cognitoIdToken.sub, profileImageUrl } } };
 };
 
 export default AuthorizedPage;
