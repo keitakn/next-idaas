@@ -50,6 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const cognitoIdToken = await verifyIdToken(idToken);
 
+  // TODO 他のソーシャルログインでも対応出来るように処理を拡張する
   const facebookSub = extractFacebookSubFromCognitoIdToken(cognitoIdToken);
 
   const defaultImageUrl =
