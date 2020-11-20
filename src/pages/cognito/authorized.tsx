@@ -1,10 +1,18 @@
 import React from 'react';
 import { GetServerSideProps } from 'next';
 import { findCookies } from '../../infrastructure/Cookie';
-import { verifyIdToken } from '../../domain/cognito';
+import {
+  verifyIdToken,
+  extractFacebookSubFromCognitoIdToken,
+  extractNameFromCognitoIdToken,
+} from '../../domain/cognito';
 
 type Props = {
-  user?: { sub: string };
+  user: {
+    sub: string;
+    name: string;
+    profileImageUrl: string;
+  };
 };
 
 export const AuthorizedPage: React.FC<Props> = ({
@@ -14,7 +22,11 @@ export const AuthorizedPage: React.FC<Props> = ({
     <>
       {user ? (
         <div>
-          Cognitoで認証済のユーザーです。 ユーザーIDは {user.sub} です！
+          <p>Cognitoで認証済のユーザーです。 ユーザーIDは {user.sub} です！</p>
+          <p>名前は {user.name} です！</p>
+          <p>
+            <img src={user.profileImageUrl} alt="ユーザープロフィール画像" />
+          </p>
         </div>
       ) : (
         ''
@@ -38,7 +50,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const cognitoIdToken = await verifyIdToken(idToken);
 
-  return { props: { user: { sub: cognitoIdToken.sub } } };
+  // TODO 他のソーシャルログインでも対応出来るように処理を拡張する
+  const facebookSub = extractFacebookSubFromCognitoIdToken(cognitoIdToken);
+
+  const defaultImageUrl =
+    'https://avatars0.githubusercontent.com/u/42195274?s=200&v=4';
+  const profileImageUrl =
+    facebookSub === ''
+      ? defaultImageUrl
+      : `https://graph.facebook.com/${facebookSub}/picture?type=large`;
+
+  // ログインIDとしても利用される、CognitoUserNameではないので注意、ここで取得するのは単なる名前なのでユニークではない
+  const extractedName = extractNameFromCognitoIdToken(cognitoIdToken);
+  const name = extractedName === '' ? '未設定' : extractedName;
+
+  return {
+    props: { user: { sub: cognitoIdToken.sub, name, profileImageUrl } },
+  };
 };
 
 export default AuthorizedPage;
