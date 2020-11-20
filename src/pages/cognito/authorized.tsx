@@ -52,7 +52,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const facebookSub = extractFacebookSubFromCognitoIdToken(cognitoIdToken);
 
-  const profileImageUrl = `https://graph.facebook.com/${facebookSub}/picture?type=large`;
+  const defaultImageUrl =
+    'https://avatars0.githubusercontent.com/u/42195274?s=200&v=4';
+  const profileImageUrl =
+    facebookSub === ''
+      ? defaultImageUrl
+      : `https://graph.facebook.com/${facebookSub}/picture?type=large`;
 
   // ログインIDとしても利用される、CognitoUserNameではないので注意、ここで取得するのは単なる名前なのでユニークではない
   const extractedName = extractNameFromCognitoIdToken(cognitoIdToken);
