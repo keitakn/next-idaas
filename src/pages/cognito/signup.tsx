@@ -25,6 +25,10 @@ const SignupPage: React.FC = () => {
       await Auth.signUp({
         username: email,
         password,
+        // clientMetadataがCognitoのカスタムLambdaでどのように送信されるかテスト、'0' or '1' が格納される
+        clientMetadata: {
+          subscribeNews: String(Math.floor(Math.random() * 2)),
+        },
       });
 
       setSendSignUp(true);
