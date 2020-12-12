@@ -4,9 +4,10 @@ import React from 'react';
 const PasswordResetForm = () => {
   const [email, setEmail] = React.useState<string>('');
   const [errorMessage, setErrorMessage] = React.useState<string>('');
-  const [sendVerificationCode, setSendVerificationCode] = React.useState<
-    boolean
-  >(false);
+  const [
+    sendVerificationCode,
+    setSendVerificationCode,
+  ] = React.useState<boolean>(false);
   const [sentEmail, setSentEmail] = React.useState<string>('');
 
   const changedEmailHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
