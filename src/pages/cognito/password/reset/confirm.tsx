@@ -14,9 +14,10 @@ type Props = {
 const ConfirmPage: React.FC<Props> = ({ user, code, error }: Props) => {
   const [newPassword, setNewPassword] = React.useState<string>('');
   const [errorMessage, setErrorMessage] = React.useState<string>('');
-  const [passwordResetCompleted, setPasswordResetCompleted] = React.useState<
-    boolean
-  >(false);
+  const [
+    passwordResetCompleted,
+    setPasswordResetCompleted,
+  ] = React.useState<boolean>(false);
 
   const changedNewPasswordHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
