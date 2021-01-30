@@ -6,8 +6,12 @@
     "dev": "next -p 3900",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
-    "format": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'"
+    "lint:prettier": "prettier 'src/**/*.{js,jsx,ts,tsx,css,json}' --check",
+    "fix:prettier": "yarn lint:prettier --write",
+    "lint:eslint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "fix:eslint": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint": "yarn lint:prettier && yarn lint:eslint",
+    "format": "yarn fix:prettier && yarn fix:eslint"
   },
   "dependencies": {
     "@aws-amplify/auth": "^3.4.18",
