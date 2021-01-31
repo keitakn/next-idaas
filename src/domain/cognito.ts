@@ -74,11 +74,12 @@ export const cognitoJwksUrl = (): string => {
 };
 
 const fetchCognitoJwks = async (): Promise<Jwks> => {
-  const jwksResponse = await fetch(cognitoJwksUrl());
+  const jwksResponse: Response = await fetch(cognitoJwksUrl());
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const jwks = await jwksResponse.json();
 
-  return jwks;
+  return jwks as Jwks;
 };
 
 const createPublicPems = (jwks: Jwks) => {
@@ -105,11 +106,13 @@ const extractPem = (
 ): CognitoPublicPem => {
   const jwtTokenList = token.split('.');
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const header = JSON.parse(Buffer.from(jwtTokenList[0], 'base64').toString());
 
   const region = cognitoRegion();
   const userPoolId = cognitoUserPoolId();
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   return cognitoPublicPems[region][userPoolId][header.kid];
 };
 

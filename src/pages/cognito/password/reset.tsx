@@ -26,7 +26,11 @@ const PasswordResetForm = () => {
       setSendVerificationCode(true);
       setSentEmail(email);
     } catch (e) {
-      setErrorMessage(e.message);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      const message =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        e.message === undefined ? '予期せぬエラーが発生しました。' : e.message;
+      setErrorMessage(message);
     }
   };
 

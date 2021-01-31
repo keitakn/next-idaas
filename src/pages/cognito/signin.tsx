@@ -33,7 +33,9 @@ export const SignInPage: React.FC = (): JSX.Element => {
 
       await router.replace('/cognito/authorized');
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       setErrorCode(e.code);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       setErrorMessage(e.message);
     }
   };
@@ -51,7 +53,9 @@ export const SignInPage: React.FC = (): JSX.Element => {
       setErrorCode('');
       setResendSignUp(true);
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       setErrorCode(e.code);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       setErrorMessage(e.message);
     }
   };

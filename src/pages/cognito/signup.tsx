@@ -34,7 +34,9 @@ const SignupPage: React.FC = () => {
       setSendSignUp(true);
       setErrorMessage('');
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       setErrorCode(e.code);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       setErrorMessage(e.message);
     }
   };
@@ -51,7 +53,9 @@ const SignupPage: React.FC = () => {
       setErrorMessage('');
       setResendSignUp(true);
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       setErrorCode(e.code);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       setErrorMessage(e.message);
     }
   };
