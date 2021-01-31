@@ -1,8 +1,6 @@
 import React, { ReactElement } from 'react';
 import { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
 import Amplify from 'aws-amplify';
-import createStore from '../ducks/createStore';
 
 Amplify.configure({
   Auth: {
@@ -28,11 +26,7 @@ Amplify.configure({
 });
 
 const CustomApp = ({ Component, pageProps }: AppProps): ReactElement => {
-  return (
-    <Provider store={createStore()}>
-      <Component {...pageProps} />
-    </Provider>
-  );
+  return <Component {...pageProps} />;
 };
 
 export default CustomApp;
