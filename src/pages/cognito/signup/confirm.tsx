@@ -14,16 +14,18 @@ const Confirm: React.FC<Props> = ({ user, error }: Props) => {
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const cognitoUser: CognitoUser = await Auth.signIn(String(user?.sub));
+      if (!unmounted) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const cognitoUser: CognitoUser = await Auth.signIn(String(user?.sub));
 
-      await Auth.sendCustomChallengeAnswer(
-        cognitoUser,
-        String(user?.authenticationToken),
-      );
+        await Auth.sendCustomChallengeAnswer(
+          cognitoUser,
+          String(user?.authenticationToken),
+        );
 
-      // eslint-disable-next-line no-restricted-globals
-      location.href = 'http://localhost:3900/cognito/authorized';
+        // eslint-disable-next-line no-restricted-globals
+        location.href = 'http://localhost:3900/cognito/authorized';
+      }
     })();
 
     return () => {
