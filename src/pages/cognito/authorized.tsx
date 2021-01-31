@@ -38,7 +38,9 @@ export const AuthorizedPage: React.FC<Props> = ({
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = findCookies<{ [key: string]: string }>(context);
 
-  const keyPrefix = `CognitoIdentityServiceProvider.${process.env.NEXT_PUBLIC_SPA_CLIENT_ID}`;
+  const keyPrefix = `CognitoIdentityServiceProvider.${String(
+    process.env.NEXT_PUBLIC_SPA_CLIENT_ID,
+  )}`;
   const userNameKey = `${keyPrefix}.LastAuthUser`;
 
   const userName = cookies[userNameKey];

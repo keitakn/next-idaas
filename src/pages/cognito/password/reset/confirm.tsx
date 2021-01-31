@@ -4,11 +4,11 @@ import { Auth } from 'aws-amplify';
 import Link from 'next/link';
 
 type Props = {
-  user?: {
+  user: {
     sub: string;
   };
-  code?: string;
-  error?: Error;
+  code: string;
+  error: Error;
 };
 
 const ConfirmPage: React.FC<Props> = ({ user, code, error }: Props) => {
@@ -33,6 +33,7 @@ const ConfirmPage: React.FC<Props> = ({ user, code, error }: Props) => {
 
       setPasswordResetCompleted(true);
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       setErrorMessage(e.message);
     }
   };
@@ -82,6 +83,7 @@ const ConfirmPage: React.FC<Props> = ({ user, code, error }: Props) => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/require-await
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const { sub, code } = context.query;
@@ -99,6 +101,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     return { props: { error: e } };
   }
 };
