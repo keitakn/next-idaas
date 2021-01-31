@@ -33,5 +33,4 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: |
           yarn install
-          yarn run build
           yarn run lint
