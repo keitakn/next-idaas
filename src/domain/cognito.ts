@@ -51,6 +51,19 @@ type CognitoIdToken = {
   name?: string;
 };
 
+export type CognitoTokenResponse = {
+  // eslint-disable-next-line camelcase
+  id_token: string;
+  // eslint-disable-next-line camelcase
+  access_token: string;
+  // eslint-disable-next-line camelcase
+  refresh_token: string;
+  // eslint-disable-next-line camelcase
+  expires_in: number;
+  // eslint-disable-next-line camelcase
+  token_type: 'Bearer';
+};
+
 export const cognitoRegion = (): string => {
   return process.env.NEXT_PUBLIC_COGNITO_REGION
     ? process.env.NEXT_PUBLIC_COGNITO_REGION
@@ -66,6 +79,12 @@ export const cognitoUserPoolId = (): string => {
 export const cognitoUserPoolClientId = (): string => {
   return process.env.NEXT_PUBLIC_SPA_CLIENT_ID
     ? process.env.NEXT_PUBLIC_SPA_CLIENT_ID
+    : '';
+};
+
+export const cognitoDomain = (): string => {
+  return process.env.NEXT_PUBLIC_COGNITO_DOMAIN
+    ? process.env.NEXT_PUBLIC_COGNITO_DOMAIN
     : '';
 };
 

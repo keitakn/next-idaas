@@ -18,6 +18,11 @@ const IndexPage: React.FC = () => {
               Cognitoでサインイン済じゃないと見れないページ
             </Link>
           </li>
+          <li>
+            <Link href="/cognito/idp/login">
+              Cognito + ソーシャルログイン（aws-amplify未使用バージョン）
+            </Link>
+          </li>
         </ul>
       </div>
     </>
