@@ -18,7 +18,7 @@
     "@aws-amplify/core": "^3.8.10",
     "amazon-cognito-identity-js": "^4.5.8",
     "aws-amplify": "^3.3.15",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "jwk-to-pem": "^2.0.4",
     "next": "^12.1.0",
     "nookies": "^2.5.2",
